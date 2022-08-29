@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
     
 const Update = (props) => {
     const { id } = useParams();
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
+    const history = useHistory();
     
     useEffect(() => {
         axios.get('http://localhost:8000/api/products/' + id)
             .then(res => {
-                setTitle(res.data.Products.title);
-                setPrice(res.data.Products.price);
-                setDescription(res.data.Products.description)
+                setTitle(res.data.title);
+                setPrice(res.data.price);
+                setDescription(res.data.description)
             })
     }, []);
     
@@ -26,6 +27,7 @@ const Update = (props) => {
         })
             .then(res => console.log(res))
             .catch(err => console.error(err));
+            history.push("/products")
     }
     
     return (
